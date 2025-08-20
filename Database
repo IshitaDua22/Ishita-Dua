@@ -1,0 +1,28 @@
+CREATE TABLE transactions (
+    transaction_id VARCHAR(255) PRIMARY KEY,
+    transaction_date DATE NOT NULL,
+    description TEXT,
+    amount DECIMAL(10, 2) NOT NULL,
+    type VARCHAR(20) -- 'Revenue' or 'Expense'
+);
+INSERT INTO transactions (transaction_id, transaction_date, description, amount, type) VALUES
+('T-001', '2025-07-01', 'Software license fee', 500.00, 'Expense'),
+('T-002', '2025-07-02', 'Product sales - Q3', 7500.00, 'Revenue'),
+('T-003', '2025-07-03', 'Office supplies purchase', 150.75, 'Expense'),
+('T-004', '2025-07-04', 'Consulting service fee', 2500.00, 'Revenue'),
+('T-005', '2025-07-05', 'Advertising campaign cost', 1200.00, 'Expense'),
+('T-006', '2025-07-06', 'Subscription sales', 300.00, 'Revenue'),
+('T-007', '2025-07-07', 'Server hosting service', 95.00, 'Expense'),
+('T-008', '2025-07-08', 'Rental income', 1500.00, 'Revenue'),
+('T-009', '2025-07-09', 'Employee salaries', 4500.00, 'Expense'),
+('T-010', '2025-07-10', 'Product sales - Q3', 10500.00, 'Revenue'),
+('T-011', '2025-07-11', 'Utilities bill', 210.50, 'Expense'),
+('T-012', '2025-07-12', 'Merchandise sales', 850.00, 'Revenue'),
+('T-013', '2025-07-13', 'Travel expenses', 320.00, 'Expense'),
+('T-014', '2025-07-14', 'Commission revenue', 600.00, 'Revenue'),
+('T-015', '2025-07-15', 'Maintenance services', 180.00, 'Expense'),
+('T-016', '2025-07-16', 'Licensing fees received', 400.00, 'Revenue'),
+('T-017', '2025-07-17', 'Legal fees', 275.00, 'Expense'),
+('T-018', '2025-07-18', 'Interest income', 25.00, 'Revenue'),
+('T-019', '2025-07-19', 'Repair costs', 75.00, 'Expense'),
+('T-020', '2025-07-20', 'Refunds issued', 50.00, 'Expense');
