@@ -1,0 +1,64 @@
+import streamlit as st
+import pandas as pd
+from Backend import fetch_transactions, fetch_aggregates
+
+# Set up the Streamlit page configuration
+st.set_page_config(
+    page_title="Finance: Revenue & Expense Tracker",
+    layout="wide"
+)
+
+st.title("💰 Finance: Revenue & Expense Tracker")
+
+# Aggregations Section
+st.header("Financial Overview")
+aggregates = fetch_aggregates()
+
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.metric(label="Total Transactions", value=aggregates.get("total_transactions"))
+with col2:
+    st.metric(label="Total Revenue", value=f"${aggregates.get('total_revenue'):,.2f}")
+with col3:
+    st.metric(label="Total Expenses", value=f"${aggregates.get('total_expense'):,.2f}")
+
+st.markdown("---")
+
+# Business Insights Section
+st.header("Business Insights")
+net_income = aggregates.get("total_revenue", 0) - aggregates.get("total_expense", 0)
+st.metric(label="Net Income (Revenue - Expenses)", value=f"${net_income:,.2f}", delta=f"{net_income:,.2f}")
+
+st.markdown("---")
+
+# Transactions Display Section
+st.header("Transaction Records")
+st.write("View, filter, and sort your transactions below.")
+
+# Filtering and Sorting Controls
+col_filter, col_sort, col_order = st.columns([1, 1, 1])
+with col_filter:
+    transaction_type = st.selectbox(
+        "Filter by Type",
+        ("All", "Revenue", "Expense")
+    )
+
+with col_sort:
+    sort_by = st.selectbox(
+        "Sort by",
+        ("None", "amount", "transaction_date")
+    )
+    
+with col_order:
+    sort_order = st.selectbox(
+        "Sort Order",
+        ("ASC", "DESC")
+    )
+
+# Fetch and display transactions
+transactions = fetch_transactions(transaction_type, sort_by, sort_order)
+if transactions:
+    df = pd.DataFrame(transactions, columns=["transaction_id", "transaction_date", "description", "amount", "type"])
+    st.dataframe(df, use_container_width=True)
+else:
+    st.info("No transactions found.")
